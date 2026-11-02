@@ -1,0 +1,57 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please check [Troubleshooting](https://github.com/devleloper/Swapr/blob/main/docs/TROUBLESHOOTING.md) first.
+        For security or privacy issues, use [private reporting](https://github.com/devleloper/Swapr/security/advisories/new) instead.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Set Right ⌘ for "Russian"
+        2. Open TextEdit
+        3. Tap Right ⌘
+    validations:
+      required: true
+  - type: input
+    id: shortcut
+    attributes:
+      label: Shortcut(s) involved
+      placeholder: Right ⌘, ⇧⌘, ⌃⌥1 …
+  - type: input
+    id: layouts
+    attributes:
+      label: Enabled input sources
+      placeholder: ABC, Russian – PC, Japanese (Romaji) …
+  - type: input
+    id: swapr-version
+    attributes:
+      label: Swapr version
+      description: Settings › General › Version
+    validations:
+      required: true
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      placeholder: macOS 26.1 (25B78)
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: Input Monitoring is granted (only relevant for modifier taps)
+        - label: I use a key remapper (Karabiner-Elements, BetterTouchTool, …)

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Unit tests (SwaprCore)
+        run: swift test --package-path Packages/SwaprCore
+
+      - name: Build app (Debug, warnings as errors)
+        run: |
+          xcodebuild \
+            -project Swapr.xcodeproj \
+            -scheme Swapr \
+            -configuration Debug \
+            -derivedDataPath build/DerivedData \
+            SWIFT_TREAT_WARNINGS_AS_ERRORS=YES \
+            build
+
+      - name: Build and package (Release)
+        run: ./scripts/build-release.sh
+
+      - name: Upload app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Swapr-${{ github.sha }}
+          path: build/Swapr-*.zip
+          retention-days: 14
