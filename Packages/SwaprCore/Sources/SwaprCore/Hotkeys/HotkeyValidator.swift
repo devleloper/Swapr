@@ -3,14 +3,12 @@ public enum HotkeyValidationError: Error, Equatable, Sendable {
     case requiresModifier
     /// ⌥ and ⇧ alone produce characters, and macOS 15+ restricts such global shortcuts.
     case optionOrShiftOnly
-    /// Already assigned to another action in Swapr.
     case duplicate(of: HotkeyAction)
     /// Assigned to an enabled macOS shortcut (System Settings › Keyboard › Keyboard Shortcuts).
     case reservedBySystem
 }
 
-/// Decides whether a hotkey can be assigned. Rejecting up front is more reliable than
-/// discovering a shortcut that silently never fires.
+/// Rejects hotkeys that would interfere with typing or never fire.
 public struct HotkeyValidator: Sendable {
     public let systemShortcuts: Set<KeyCombo>
 

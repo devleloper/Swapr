@@ -48,7 +48,6 @@ public struct PhysicalModifier: Hashable, Sendable {
     /// A `flagsChanged` event for any other key code (Caps Lock, Fn) is not a modifier tap.
     public static let keyCodes: Set<UInt16> = [54, 55, 56, 58, 59, 60, 61, 62]
 
-    /// Decodes the set of currently held modifier keys from raw event flags.
     public static func pressed(inRawFlags flags: UInt64) -> Set<PhysicalModifier> {
         Set(deviceMasks.filter { flags & $0.mask != 0 }.map(\.key))
     }
@@ -73,7 +72,7 @@ public struct ModifierFlags: OptionSet, Codable, Hashable, Sendable {
 
     public var kinds: [ModifierKind] { Self.table.filter { contains($0.flag) }.map(\.kind) }
 
-    /// Carbon `cmdKey` / `optionKey` / ... mask for `RegisterEventHotKey`.
+    /// Carbon modifier mask (`cmdKey`, `optionKey`, etc.) for `RegisterEventHotKey`.
     public var carbonFlags: UInt32 {
         Self.table.filter { contains($0.flag) }.reduce(0) { $0 | $1.carbon }
     }

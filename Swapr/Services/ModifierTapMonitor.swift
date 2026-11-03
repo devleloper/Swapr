@@ -2,11 +2,11 @@ import Carbon
 import Foundation
 import SwaprCore
 
-/// Detects modifier-only shortcuts (Right ⌘, ⇧⌘, …) system-wide with a listen-only event tap.
+/// Detects modifier-only shortcuts such as Right ⌘ or ⇧⌘ with a listen-only event tap.
 ///
 /// Privacy: the tap is passive and cannot alter or block input. For key presses it reads
-/// only the event *type* to know that a non-modifier key was pressed; key codes and
-/// characters are never read, kept or stored. Requires Input Monitoring permission.
+/// only the event type, to know that a non-modifier key was pressed; key codes and
+/// characters are never read or stored. Requires Input Monitoring permission.
 @MainActor
 final class ModifierTapMonitor {
     var onTap: ((Set<PhysicalModifier>) -> Void)?

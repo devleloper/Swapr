@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-/// Shows the single app window (Welcome or Settings) on demand and releases it on close,
+/// Owns the single Welcome or Settings window and releases it on close,
 /// so an idle menu bar app keeps no view hierarchy in memory.
 @MainActor
 final class WindowPresenter: NSObject, NSWindowDelegate {
@@ -36,8 +36,8 @@ final class WindowPresenter: NSObject, NSWindowDelegate {
 
     private func present(_ content: some View, title: String, transparentTitlebar: Bool) {
         let controller = NSHostingController(rootView: content.environment(model))
-        // Both screens have a fixed layout: size the window once instead of letting the
-        // hosting controller drive it continuously (which can loop Auto Layout).
+        // Both screens have a fixed layout. Size the window once; letting the hosting
+        // controller resize it continuously can send Auto Layout into a loop.
         controller.sizingOptions = []
 
         let isNew = window == nil

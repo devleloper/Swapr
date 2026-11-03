@@ -3,8 +3,8 @@ import Foundation
 /// Recognizes modifier taps: one or more modifier keys pressed and then all released
 /// without any other key, click or scroll in between, within `maxDuration`.
 ///
-/// Pure state machine; the caller feeds it events and timestamps. It never sees which
-/// regular key was pressed, only that *something* other than a modifier happened.
+/// Pure state machine. It never sees which regular key was pressed, only that some
+/// non-modifier input happened.
 public struct ModifierTapDetector: Sendable {
     public var maxDuration: TimeInterval
 

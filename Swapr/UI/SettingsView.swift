@@ -20,8 +20,6 @@ struct SettingsView: View {
         .frame(width: 520, height: 600)
     }
 
-    // MARK: Sections
-
     private var layoutsSection: some View {
         Section {
             ForEach(sources) { source in
@@ -83,8 +81,8 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     if !isFailed {
-                        // macOS grants access to one exact build: after an update or rebuild the
-                        // switch can still look on while it belongs to the previous copy of Swapr.
+                        // macOS ties the grant to one exact build. After an update or rebuild the
+                        // switch can still show as on while it belongs to the previous copy.
                         Text("Already switched on? Select Swapr in that list, remove it with –, then click the button below again.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
@@ -149,8 +147,6 @@ struct SettingsView: View {
             Text("General")
         }
     }
-
-    // MARK: Helpers
 
     private static var version: String {
         let info = Bundle.main.infoDictionary

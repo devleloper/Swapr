@@ -10,7 +10,7 @@ final class InputSourceService {
     private(set) var sources: [InputSource] = []
     private(set) var currentID: String?
 
-    /// Called after the set of enabled sources changes (user added or removed a layout).
+    /// Called when the user adds or removes a layout.
     @ObservationIgnored var onSourcesChanged: (() -> Void)?
 
     @ObservationIgnored private var handles: [String: TISInputSource] = [:]

@@ -1,8 +1,8 @@
 import Carbon
 import SwaprCore
 
-/// Global key-combination hotkeys via Carbon's `RegisterEventHotKey`.
-/// It is still the only public API for system-wide shortcuts that needs no permissions.
+/// Global key-combination hotkeys via Carbon `RegisterEventHotKey`, the only public API
+/// for system-wide shortcuts that needs no permissions.
 @MainActor
 final class KeyComboHotkeys {
     var onTrigger: ((HotkeyAction) -> Void)?
@@ -50,7 +50,8 @@ final class KeyComboHotkeys {
         onTrigger?(action)
     }
 
-    /// The handler lives as long as the app; this object is owned by the app model for its whole lifetime.
+    /// The handler is never removed and keeps an unretained pointer to self;
+    /// AppModel owns this object for the app's lifetime.
     private func installHandlerIfNeeded() -> Bool {
         guard handler == nil else { return true }
         var spec = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))

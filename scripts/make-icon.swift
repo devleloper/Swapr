@@ -1,6 +1,6 @@
 #!/usr/bin/env swift
 // Renders the Swapr app icon into Swapr/Resources/Assets.xcassets/AppIcon.appiconset.
-// Usage: swift scripts/make-icon.swift
+// Usage, from the repository root: swift scripts/make-icon.swift
 import AppKit
 
 let canvas: CGFloat = 1024

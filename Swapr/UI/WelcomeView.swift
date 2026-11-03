@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-/// First-launch introduction. Shown once; Settings is one click away.
+/// Shown once, on first launch.
 struct WelcomeView: View {
     let onContinue: () -> Void
 

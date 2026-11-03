@@ -3,7 +3,7 @@ import Observation
 import ServiceManagement
 import SwaprCore
 
-/// Application state and behavior: owns settings and wires hotkey sources to layout switching.
+/// Owns settings and wires hotkey sources to layout switching.
 @MainActor @Observable
 final class AppModel {
     enum TapMonitorState: Equatable {
@@ -190,8 +190,8 @@ final class AppModel {
         updatePermissionPolling()
     }
 
-    /// While access is missing, check every few seconds so shortcuts start working as soon
-    /// as the user flips the switch in System Settings, without having to come back to Swapr.
+    /// Polls while access is missing, so shortcuts start working once the user grants it
+    /// in System Settings, without switching back to Swapr.
     private func updatePermissionPolling() {
         if tapMonitorState == .needsPermission {
             guard permissionPoll == nil else { return }

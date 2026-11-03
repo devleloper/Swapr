@@ -34,8 +34,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Opening the app again (Finder, Spotlight, Launchpad) shows Settings.
-    /// This is the way back in when the menu bar item is hidden.
+    /// Reopening the app from Finder or Spotlight shows Settings,
+    /// the way back in when the menu bar item is hidden.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         windows.showSettings()
         return false

@@ -38,7 +38,7 @@ enum KeyboardSettings {
     }
 }
 
-/// Enabled macOS keyboard shortcuts (Spotlight, input source switching, Mission Control, …).
+/// Enabled system shortcuts (Spotlight, input source switching, Mission Control and others).
 enum SystemShortcuts {
     static func enabled() -> Set<KeyCombo> {
         var unmanaged: Unmanaged<CFArray>?

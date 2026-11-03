@@ -2,8 +2,8 @@ import AppKit
 import SwiftUI
 import SwaprCore
 
-/// A shortcut recorder. Click, then press a key combination or tap modifiers alone.
-/// ⌫ clears, Esc cancels, clicking elsewhere ends recording.
+/// Records a key combination or a modifier-only tap.
+/// ⌫ clears, Esc cancels, a click elsewhere ends recording.
 struct HotkeyField: View {
     let action: HotkeyAction
 
@@ -105,8 +105,8 @@ struct HotkeyField: View {
     }
 }
 
-/// Captures key events for one recording, only while this app's window is key.
-/// Uses a local event monitor, so it needs no permission and sees nothing outside Swapr.
+/// Captures key events for one recording while a Swapr window is key.
+/// A local event monitor needs no permission and sees no events from other apps.
 @MainActor @Observable
 private final class RecordingSession {
     private(set) var isRecording = false
@@ -126,7 +126,7 @@ private final class RecordingSession {
             guard let self else { return event }
             return MainActor.assumeIsolated { self.handle(event) } ? nil : event
         }
-        // Switching to another app would otherwise leave global hotkeys suspended.
+        // Switching to another app mid-recording would otherwise leave global hotkeys suspended.
         resignObserver = NotificationCenter.default.addObserver(forName: NSWindow.didResignKeyNotification, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.stop() }
         }
@@ -157,7 +157,7 @@ private final class RecordingSession {
             }
             return true
         default:
-            // A click anywhere ends recording; the click itself proceeds normally.
+            // A click ends recording but is still delivered.
             stop()
             return false
         }

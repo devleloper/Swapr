@@ -10,7 +10,7 @@ public struct HotkeyRecorder: Sendable {
         case cleared
     }
 
-    /// Generous duration: people press modifiers more deliberately while recording.
+    // Longer than the default: modifiers are pressed more slowly while recording.
     private var detector = ModifierTapDetector(maxDuration: 3)
 
     public init() {}

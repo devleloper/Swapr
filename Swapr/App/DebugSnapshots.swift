@@ -2,9 +2,8 @@
 import AppKit
 import SwiftUI
 
-/// Debug builds only: `Swapr --snapshot <directory>` renders the app's windows to PNG in
-/// light and dark appearance, then quits. Used for README screenshots and UI checks.
-/// Renders Swapr's own views offscreen, so it needs no Screen Recording permission.
+/// `Swapr --snapshot <directory>` renders the app's windows to PNG in light and dark
+/// appearance, then quits. Rendering is offscreen, so no Screen Recording permission is needed.
 @MainActor
 enum DebugSnapshots {
     static func runIfRequested(model: AppModel) -> Bool {

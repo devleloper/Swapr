@@ -1,8 +1,6 @@
-/// What a hotkey does.
 public enum HotkeyAction: Hashable, Sendable {
-    /// Switch to the input source with this identifier.
     case select(sourceID: String)
-    /// Switch to the next input source in the cycle.
+    /// Next input source, skipping `Settings.cycleExcludedIDs`.
     case cycle
 }
 
@@ -19,14 +17,12 @@ public struct HotkeyBinding: Hashable, Sendable {
 public enum MenuBarDisplay: String, Codable, CaseIterable, Sendable {
     /// Short code of the current layout, e.g. `EN`.
     case layoutCode
-    /// A static keyboard icon.
     case icon
     /// No menu bar item; reopen the app to reach Settings.
     case hidden
 }
 
-/// Everything the user configures. Launch at login is deliberately absent:
-/// macOS owns that state and is queried directly.
+/// User configuration. Launch at login is not stored here: macOS owns that state.
 public struct Settings: Codable, Equatable, Sendable {
     /// Hotkeys keyed by input source identifier. Entries for sources that are
     /// currently disabled in macOS are kept so they work again once re-enabled.
