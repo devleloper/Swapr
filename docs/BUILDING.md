@@ -55,11 +55,20 @@ swift scripts/make-icon.swift
 
 ## Permissions during development
 
-macOS ties Input Monitoring access to the app's code signature. Ad-hoc signatures change on every build, so after rebuilding you may have to remove Swapr from **Privacy & Security › Input Monitoring** and add it again. Key-combination shortcuts are unaffected. Faster alternative:
+macOS ties Input Monitoring access to the app's code signature. An ad-hoc signature is a hash of the binary, so **every rebuild, and every Debug/Release copy, is a different app to macOS**. The switch in **Privacy & Security › Input Monitoring** may look on while it belongs to another build; Swapr then keeps showing *Input Monitoring access required*. Key-combination shortcuts are unaffected. After rebuilding, reset and grant again:
 
 ```bash
 tccutil reset ListenEvent io.github.devleloper.Swapr
 ```
+
+To keep the permission across rebuilds, sign with a stable certificate instead of ad hoc: an Apple Development certificate (free Apple ID in Xcode › Settings › Accounts), or a self-signed code signing certificate made in Keychain Access › Certificate Assistant › Create a Certificate (type *Code Signing*). Then build with, for example:
+
+```bash
+xcodebuild -project Swapr.xcodeproj -scheme Swapr -configuration Debug -derivedDataPath build/DerivedData \
+  CODE_SIGN_IDENTITY="<certificate name>" build
+```
+
+macOS then identifies Swapr by bundle ID and certificate, so the grant survives rebuilds.
 
 ## Versioning
 

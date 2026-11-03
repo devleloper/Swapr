@@ -3,8 +3,8 @@
 ## A modifier tap (Right ⌘, ⇧⌘, …) does nothing
 
 1. **Check the permission.** Open Swapr Settings. If you see **Input Monitoring access required**, follow [Granting access](PERMISSIONS.md#granting-access).
-2. **Restart after granting.** If Settings says **Restart required**, click **Restart Swapr**.
-3. **Rebuilt or updated the app?** Ad-hoc signed builds get a new code signature on every build, and macOS ties the permission to it. The switch in System Settings may look on while it actually belongs to the old build. Select Swapr in **Input Monitoring**, remove it with **–**, then grant access again.
+2. **Switch is on, but Swapr still asks for access?** This is the most common case. macOS grants Input Monitoring to one exact build of an ad-hoc signed app. After an update or rebuild, or when you run a different copy (for example a Debug build next to the one in Applications), the switch in System Settings still looks on but belongs to the other copy. Fix: quit Swapr, select Swapr in **System Settings › Privacy & Security › Input Monitoring**, remove it with **–**, launch Swapr and grant access again. Keep a single copy of Swapr in `/Applications`.
+3. **Restart after granting.** If Settings says **Restart required**, click **Restart Swapr**.
 4. **Release cleanly.** The tap fires only when *all* modifiers are released, with no other key, click or scroll in between, within one second. Holding a modifier longer, for example while thinking, cancels the tap.
 5. **Password fields.** Taps are ignored while Secure Input is active (password fields, some terminals with *Secure Keyboard Entry*). Check **Terminal › Secure Keyboard Entry** or the equivalent setting in your terminal app.
 6. **Remappers.** Tools such as Karabiner-Elements can change which physical key macOS sees as Right ⌘. Record the shortcut again with the remapper active.
@@ -50,6 +50,16 @@ tccutil reset ListenEvent io.github.devleloper.Swapr
 
 Then launch Swapr again. The welcome screen appears as on first launch.
 
+## Diagnostic logs
+
+Swapr logs state changes (permission status, event tap, registration and switching failures), never keys or text:
+
+```bash
+log stream --level info --predicate 'subsystem == "io.github.devleloper.Swapr"'
+```
+
+Or open **Console.app** and search for `io.github.devleloper.Swapr`. For example, `Modifier tap monitor: needsPermission` means macOS does not consider this copy of Swapr authorized; see step 2 above.
+
 ## Reporting a bug
 
-Open an [issue](https://github.com/devleloper/Swapr/issues/new/choose) with your macOS version, Swapr version (Settings › General › Version), your layouts and the shortcut that fails.
+Open an [issue](https://github.com/devleloper/Swapr/issues/new/choose) with your macOS version, Swapr version (Settings › General › Version), your layouts, the shortcut that fails and the diagnostic log output.

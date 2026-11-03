@@ -82,6 +82,14 @@ struct SettingsView: View {
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                    if !isFailed {
+                        // macOS grants access to one exact build: after an update or rebuild the
+                        // switch can still look on while it belongs to the previous copy of Swapr.
+                        Text("Already switched on? Select Swapr in that list, remove it with –, then click the button below again.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             } icon: {
                 Image(systemName: "exclamationmark.triangle.fill")

@@ -57,6 +57,7 @@ final class ModifierTapMonitor {
         switch type {
         case .tapDisabledByTimeout, .tapDisabledByUserInput:
             // macOS disables taps that stall or during secure input; resume and drop partial state.
+            Log.hotkeys.notice("Event tap disabled by the system (\(type.rawValue)); re-enabling")
             if let tap { CGEvent.tapEnable(tap: tap, enable: true) }
             detector.reset()
         case .flagsChanged where PhysicalModifier.keyCodes.contains(keyCode):

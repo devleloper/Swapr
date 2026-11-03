@@ -63,6 +63,7 @@ final class AppModel {
         }
         guard let targetID, targetID != inputSources.currentID else { return }
         if !inputSources.select(targetID) {
+            Log.switching.error("Could not select input source \(targetID, privacy: .public)")
             NSSound.beep()
         }
     }
@@ -160,7 +161,12 @@ final class AppModel {
             if case .keyCombo(let combo) = binding.hotkey { (combo, binding.action) } else { nil }
         }
         let failed = keyCombos.register(combos)
-        if failed != failedActions { failedActions = failed }
+        if failed != failedActions {
+            failedActions = failed
+            if !failed.isEmpty {
+                Log.hotkeys.error("Could not register \(failed.count) key combination(s)")
+            }
+        }
 
         let needsTaps = bindings.contains { if case .modifierTap = $0.hotkey { true } else { false } }
         updateTapMonitor(needed: needsTaps)
@@ -177,7 +183,10 @@ final class AppModel {
         } else {
             state = tapMonitor.start() ? .running : .failed
         }
-        if state != tapMonitorState { tapMonitorState = state }
+        if state != tapMonitorState {
+            tapMonitorState = state
+            Log.hotkeys.notice("Modifier tap monitor: \(String(describing: state), privacy: .public)")
+        }
         updatePermissionPolling()
     }
 

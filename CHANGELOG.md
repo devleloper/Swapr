@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Launch at login via `SMAppService`.
 - Input Monitoring permission flow with automatic detection of newly granted access.
 - Welcome screen on first launch.
+- Diagnostic logging of permission, event tap and registration state (no keys or text).
 - Light and Dark Mode; Liquid Glass styling on macOS 26 and later.
 
 [Unreleased]: https://github.com/devleloper/Swapr/compare/v1.0.0...HEAD
